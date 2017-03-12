@@ -4,7 +4,7 @@
 
 @synthesize service;
 @synthesize key;
-
+float defaultBright;
 - (id)init {
     self = [super init];
     if (self != nil) {
@@ -30,10 +30,13 @@
 };
 
 - (void)restore {
-    [self changeBy:BRIGHTNESS_INCREMENT];
+    if(defaultBright > [self getBright]){
+        [self changeBy:BRIGHTNESS_INCREMENT];
+    }
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    defaultBright = [self getBright];
     [NSTimer scheduledTimerWithTimeInterval:1
                                      target:self
                                    selector:@selector(restore)
